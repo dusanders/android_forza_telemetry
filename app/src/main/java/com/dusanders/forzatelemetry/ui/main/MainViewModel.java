@@ -18,6 +18,7 @@ public class MainViewModel extends ViewModel {
         int torque = 0;
         int torquerpm = 0;
     }
+
     private final String TAG = "MainViewModel";
     private MutableLiveData<State> state = new MutableLiveData<>();
 
@@ -26,12 +27,15 @@ public class MainViewModel extends ViewModel {
     }
 
     public void submitNewApi(ForzaTelemetryApi api) {
-//        Log.d(TAG, "new api");
-        setTitle("speed: " + api.getSpeedMps() + "\n"
+        String out = "speed: " + api.getSpeedMps() + "\n"
                 + " mph: " + api.getSpeedMph() + "\n"
                 + " kph: " + api.getSpeedKph() + "\n"
                 + " time: " + api.getTimeStampMS() + "\n"
-                + " rpm: " + api.getCurrentEngineRpm());
+                + "avg vel: " + api.getAverageVelocity() + "\n"
+                + "gear: " + api.getGear() + "\n"
+                + " rpm: " + api.getCurrentEngineRpm();
+//        Log.d(TAG, out);
+        setTitle(out);
     }
 
     public void setIp(String ip, int port) {
@@ -48,7 +52,7 @@ public class MainViewModel extends ViewModel {
 
     private State fromPrevious() {
         State updated = state.getValue();
-        if(updated == null) {
+        if (updated == null) {
             updated = new State();
         }
         return updated;
