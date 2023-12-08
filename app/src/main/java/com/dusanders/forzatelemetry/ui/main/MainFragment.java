@@ -21,7 +21,7 @@ import forza.telemetry.ForzaTelemetryBuilder;
 
 public class MainFragment extends Fragment {
 
-    private MainViewModel mViewModel;
+    public MainViewModel mViewModel;
     private TextView titleView;
     private TextView ipView;
 
@@ -29,10 +29,9 @@ public class MainFragment extends Fragment {
         return new MainFragment(mainViewModel);
     }
 
-    public MainFragment(MainViewModel viewModel) {
-        this.mViewModel = viewModel;
+    private MainFragment(MainViewModel vm) {
+        mViewModel = vm;
     }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,8 +59,7 @@ public class MainFragment extends Fragment {
             @Override
             public void run() {
                 ipView.setText(state.ip);
-                titleView.setText("hp: " + state.hp + " @ " + state.rpm + "\n"
-                        + "tor: " + state.torque + " @ " + state.torquerpm);
+                titleView.setText(state.title);
             }
         });
     }

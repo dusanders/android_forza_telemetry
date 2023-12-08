@@ -28,12 +28,13 @@ public class MainActivity extends AppCompatActivity implements ForzaInterface {
     private Handler handler;
     private ForzaTelemetryBuilder builder;
     private MainViewModel mainViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         if (savedInstanceState == null) {
-            mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.container, MainFragment.newInstance(mainViewModel))
@@ -60,11 +61,12 @@ public class MainActivity extends AppCompatActivity implements ForzaInterface {
             Log.w(TAG, "Thread not alive..");
             builder.getThread().start();
         }
+        handler.post(getIpRunnable());
     }
 
     @Override
     public void onDataReceived(ForzaTelemetryApi api) {
-        Log.d("Main", api.getCurrentEngineRpm().toString());
+//        Log.d("Main", api.getCurrentEngineRpm().toString());
         mainViewModel.submitNewApi(api);
     }
 
